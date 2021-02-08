@@ -16,6 +16,13 @@ const getSongData = () => {
     }
 };
 
+const enterKeypress = (e) => {
+    if (e.key === "Enter") {
+        getSongData();
+    }
+};
+songSearch.addEventListener("keypress", enterKeypress)
+
 const displaySong = songs => {
     songSearch.value = "";
     const songContainer = document.getElementById('song-container');
