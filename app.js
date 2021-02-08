@@ -1,8 +1,10 @@
 const baseUrl = "https://api.lyrics.ovh/";
 const songSearch = document.getElementById('song-search');
 const lyricsError = document.getElementById('lyrics-error');
+const songContainer = document.getElementById('song-container');
 
 const getSongData = () => {
+    songContainer.innerHTML = "";
     handleError("");
     if (!songSearch.value) {
         handleError("Please, Enter your artist or song name..");
@@ -25,7 +27,6 @@ songSearch.addEventListener("keypress", enterKeypress)
 
 const displaySong = songs => {
     songSearch.value = "";
-    const songContainer = document.getElementById('song-container');
     songContainer.innerHTML = "";
     if (!songs.length) {
         handleError("No Matching Songs Here.");
