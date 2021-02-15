@@ -2,19 +2,26 @@ const baseUrl = "https://api.lyrics.ovh/";
 const songSearch = document.getElementById('song-search');
 const lyricsError = document.getElementById('lyrics-error');
 const songContainer = document.getElementById('song-container');
+const songTitle = document.getElementById('song-title');
+const songArtist = document.getElementById('song-artist');
+const singleLyrics = document.getElementById('single-lyrics');
 
 const getSongData = () => {
+    songTitle.innerText = "";
+    songArtist.innerText = "";
+    singleLyrics.innerText = "";
     songContainer.innerHTML = "";
     handleError("");
     if (!songSearch.value) {
         handleError("Please, Enter your artist or song name..");
     }
     else {
+        toggleSpinner();
         const url = `${baseUrl}suggest/${songSearch.value}`;
         fetch(url)
        .then(res => res.json())
        .then(data => displaySong(data.data))
-       .catch(err => handleError("Something went wrong!! Please try again later!."));
+       .catch(() => handleError("Something went wrong!! Please try again later!."));
     }
 };
 
@@ -28,6 +35,7 @@ songSearch.addEventListener("keypress", enterKeypress)
 const displaySong = songs => {
     songSearch.value = "";
     songContainer.innerHTML = "";
+    toggleSpinner();
     if (!songs.length) {
         handleError("No Matching Songs Here.");
     }
@@ -55,6 +63,11 @@ const displaySong = songs => {
 };
 
 const getLyrics = async (artist, title) => {
+    songTitle.innerText = "";
+    songArtist.innerText = "";
+    singleLyrics.innerText = "";
+    handleError("");
+    toggleSpinner();
     const url = `${baseUrl}v1/${artist}/${title}`;
     try{
         const res = await fetch(url);
@@ -67,13 +80,7 @@ const getLyrics = async (artist, title) => {
 };
 
 const displayLyrics = (lyrics, artist, title) => {
-    const songTitle = document.getElementById('song-title');
-    const songArtist = document.getElementById('song-artist');
-    const singleLyrics = document.getElementById('single-lyrics');
-    songTitle.innerText = "";
-    songArtist.innerText = "";
-    singleLyrics.innerText = "";
-    handleError("");
+    toggleSpinner();
     if (lyrics) {
         songTitle.innerText = title;
         songArtist.innerText = artist;
@@ -83,6 +90,12 @@ const displayLyrics = (lyrics, artist, title) => {
         handleError("Sorry The lyrics Not Found");
     }
 }
+
+const toggleSpinner = () => {
+    const spinnerToggle = document.getElementById('spinner-toggle');
+    spinnerToggle.classList.toggle("d-none");
+}
+
 const handleError = err => {
     lyricsError.innerText = err;
 }

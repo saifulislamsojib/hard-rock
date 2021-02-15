@@ -48,10 +48,15 @@
         </div>
         <!-- Single Lyrics -->
         <div class="single-lyrics text-center">
-            <h1 class="text-danger" id="lyrics-error"></h1>
             <h1 class="text-primary" id="song-title"></h1>
             <h2 class="text-primary p-2" id="song-artist"></h2>
             <div class="mt-5" id="single-lyrics"></div>
+        </div>
+        <h1 class="text-danger text-center" id="lyrics-error"></h1>
+        <div class="d-flex justify-content-center">
+            <div id="spinner-toggle" class="spinner-border text-primary d-none" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
         </div>
         <div id="song-container" class="search-result col-md-8 mx-auto py-4">
             <h2 class="text-center">Search Results Will Displayed Here...</h2>
